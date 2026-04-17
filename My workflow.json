@@ -1,0 +1,140 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Infographic Creator",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "what's the youtube link"
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1ede004a-b1ac-4266-9033-b9111d92da0d",
+      "name": "On form submission",
+      "webhookId": "0992f577-0808-480b-af99-a4748426009a"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/pintostudio~youtube-transcript-scraper/run-sync-get-dataset-items?token=YOUR_API_KEY",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "token",
+              "value": "YOUR_API_KEY"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "videoUrl",
+              "value": "={{ $json['what\\'s the youtube link'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "b0de255c-f955-436a-b642-1212cdd2fe10",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.stability.ai/v2beta/stable-image/generate/core",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_API_KEY"
+            },
+            {
+              "name": "Accept",
+              "value": "image/*"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "prompt",
+              "value": "Create a high-density sketchnote whiteboard infographic poster about \"21 Life Skills That Give You a Huge Advantage\".  Structure the page into 5 boxed sections with hand-drawn colored borders and arrows connecting them.  Sections: 1. Foundational Skills: focus, discipline, patience, delayed gratification 2. Interpersonal & Communication: communication, storytelling, networking, emotional control 3. Mindset, Well-being & Adaptability: meditation, visualization, self-education, adaptability, physical activity, persistence 4. Growth & Earning Skills: selling, content creation, investing in self and assets 5. Future & Conclusion: consistency, long-term thinking, daily practice  Design requirements: - white background - black handwritten/sketch typography - bold uppercase section headings - short readable bullet points under each heading - doodle-style icons beside points - neat sketchnote / whiteboard infographic style - bento-box grid layout - high information density but organized - educational self-improvement poster - clean, professional, visually balanced  Do not create a realistic scene. Do not create a single character portrait. Do not make it cinematic. Focus on a full-page infographic with readable structured content."
+            },
+            {
+              "name": "output_format",
+              "value": "png"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "693f1d17-6879-40d2-85d4-01471a21c43e",
+      "name": "HTTP Request1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c717cfd4-19ed-4eac-8f4f-897d7538f75f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ece65461aa8c0322c5dfbb9d90b7ff9cce2239d96fcec320b1fa009a7e96d174"
+  },
+  "id": "8b7YiEfEEAMYfUE5",
+  "tags": []
+}
