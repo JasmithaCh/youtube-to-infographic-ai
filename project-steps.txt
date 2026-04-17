@@ -1,0 +1,5 @@
+1. Enter YouTube URL
+2. Fetch transcript
+3. Extract key points
+4. Generate infographic prompt
+5. Generate final image
