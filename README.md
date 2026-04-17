@@ -21,7 +21,7 @@ This project is an n8n workflow that takes a YouTube video, extracts the transcr
 - `output.png` — sample generated output
 
 ## Sample Output
-![Project Output](output.png)
+output.png
 
 ## Why this project is useful
 This project shows workflow automation, API integration, prompt engineering, and AI-based content transformation.
